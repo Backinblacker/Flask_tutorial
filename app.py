@@ -46,7 +46,16 @@ car_schema = CarSchema()
 cars_schema = CarSchema(many=True)
 
 # Resources
+# Majority of the code goes in this section
+# Handling Multiple Cars
+class CarListResource(Resource):
+    def get(self):
+        all_cars = Car.query.all()
+# Cars Schema used to prevent NOT JSON Serialized error
+        return cars_schema.dump(all_cars)
 
 
 
 # Routes
+# "flask run" to start the program
+api.add_resource(CarListResource, '/api/cars')
