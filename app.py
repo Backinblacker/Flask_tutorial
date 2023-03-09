@@ -23,12 +23,27 @@ CORS(app)
 Migrate(app, db)
 
 # Models
-
-
+class Car(db.Model):
+# The Primary Key makes id the unique identifier
+    id = db.Column(db.Integer, primary_key = True)
+# 255 is the max amount of characters, Can be set to whatever
+# nullable because we don't want to add a row without a make or model
+    make = db.Column(db.String(255), nullable = False)
+    model = db.Column(db.String(255), nullable = False)
+    year = db.Column(db.Integer)
+    
+    def __repr__(self):
+        return f'{self.year} {self.make} {self.model}'
 
 # Schemas
+class CarSchema(ma.Schema):
+    class Meta:
+        fields = ("id", "make", "model", "year")
 
-
+# Single Car
+car_schema = CarSchema()
+# Multiple Cars
+cars_schema = CarSchema(many=True)
 
 # Resources
 
