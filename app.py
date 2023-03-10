@@ -53,7 +53,17 @@ class CarListResource(Resource):
         all_cars = Car.query.all()
 # Cars Schema used to prevent NOT JSON Serialized error
         return cars_schema.dump(all_cars)
-
+    
+    def post(self):
+        new_car = Car(
+            make= request.json['make'],
+            model= request.json['model'],
+            year=request.json['year']
+        )
+        db.session.add(new_car)
+        db.session.commit()
+# Serialize a single car using the CAR schema
+        return car_schema.dump(new_car)
 
 
 # Routes
